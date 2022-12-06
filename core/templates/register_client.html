@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cadastrar Cliente{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    {% if messages %} 
+        {% for message in messages %}
+            <div class="alert alert-primary" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}    
+	{% endif %}
+
+    
+    <div class="col-md-4 offset-md-4">
+        <div class="card  auth-card">
+            <div class="card-body">
+                <h4 class="card-title text-center">Entrar</h4>
+        
+                <form action="" method="POST">
+                    {% csrf_token %}
+        
+                    {{ form.as_p }}
+
+                    <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                </form>
+
+                <p class="change-form-p">Já tenho uma conta! <a href="{% url 'core:login_account' %}">Clique aqui!</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

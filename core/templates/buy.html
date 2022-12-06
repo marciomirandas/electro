@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Meu Carrinho{% endblock %}
+
+{% block content %}
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            {% if messages %} 
+                {% for message in messages %}
+                    <div class="alert alert-primary" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}  
+            {% endif %}
+            <div class="col-md-6">
+                <h4>Ítens do Carrinho</h4>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Código</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Subtotal</th>
+                        
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for prod in cart.cartproduct_set.all %}
+                        <tr>
+                            <th scope="row">{{prod.id}}</th>
+                            <td>{{prod.product}}</td>
+                            <td>{{prod.product.price}}</td>
+                            <td>{{prod.quantity}}</td>
+                            <td>{{prod.total}}</td>
+                            
+                            
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+                <h4>Total: {{cart.total}}</h4>
+                <a href="{% url 'core:my_cart'%}"><button type="button" class="btn btn-danger"> Voltar ao Carrinho </button></a>
+            </div>
+            <div class="col-md-6">
+
+                {% if cart.delivery == None %}
+                    <form action="{% url 'core:delivery'%}" method='POST'>
+                        {% csrf_token %}
+
+                        {{form_delivery.as_p }}
+                        <button type="submit" class="btn btn-success"> Calcular Frete </button>
+                    </form>
+                {% else %}
+                <form action="{% url 'core:delivery'%}" method='POST'>
+                    {% csrf_token %}
+
+                    {{form_delivery.as_p }}
+                    <button type="submit" class="btn btn-success"> Calcular Frete </button>
+                </form>
+                    <h5>Frete: {{cart.delivery}}</h5>
+                    <br>
+                    <h4>Ítens do Carrinho</h4>
+                    <form action="" method='POST'>
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+                        
+                        <button type="submit" class="btn btn-success"> Finalizar Compra </button>
+                    </form>
+                {% endif %}
+
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+
+{% endblock %}

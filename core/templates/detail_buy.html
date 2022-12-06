@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Minha Conta{% endblock %}
+
+{% block content %}
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title text-center">
+                    <h3 class="title">Detalhes da Compra</h3>
+                </div>
+            </div>
+            <!-- /section title -->
+
+                <div class="col-md-12">
+                    <p><strong>Código: </strong>{{ buy.id }}</p>
+                    <p><strong>Criado em: </strong>{{ buy.created }}</p>
+                    <p><strong>Destinatário: </strong>{{ buy.recipient }}</p>
+                    <p><strong>Endereço: </strong>{{ buy.address }}</p>
+                    <p><strong>E-mail: </strong>{{ buy.email }}</p>
+                    <p><strong>Total: </strong>{{ buy.total }}</p>
+                    <p><strong>Status: </strong>{{ buy.status }}</p>
+                    <br><br>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="section-title text-center">
+                        <h4 class="title">Produtos</h4>
+                    </div>
+                </div>
+
+                
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Código</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Detalhe</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for b in buy.cart.cartproduct_set.all %}
+
+                            <tr>
+                                <th scope="row">{{b.id}}</th>
+                                <td>{{b.product.name}}</td>
+                                <td>{{b.quantity}}</td>
+                                <td>{{b.total}}</td>
+                                <td><a href="{% url 'core:product' b.product.slug %}">Ver</a></td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Meu Carrinho{% endblock %}
+
+{% block content %}
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            {% if cart.total == 0 or cart == None %}
+
+                <!-- section title -->
+                <div class="col-md-12">
+                    <div class="section-title text-center">
+                        <br/><br/><br/><br/><br/><br/>
+                        <h3 class="title">Carrinho Vazio! ;(</h3>
+                        <br/><br/><br/><br/><br/><br/>
+                    </div>
+                </div>
+                <!-- /section title -->
+
+            {% else %}
+
+                <!-- section title -->
+                <div class="col-md-12">
+                    <div class="section-title text-center">
+                        <h3 class="title">Meu Carrinho</h3>
+                    </div>
+                </div>
+                <!-- /section title -->
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Código</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Subtotal</th>
+                        <th scope="col">Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for prod in cart.cartproduct_set.all %}
+                        <tr>
+                            <th scope="row">{{prod.id}}</th>
+                            <td>{{prod.product}}</td>
+                            <td>{{prod.product.price}}</td>
+                            <td>{{prod.quantity}}</td>
+                            <td>{{prod.total}}</td>
+                            <td>
+                                <a href="{% url 'core:edit_cart' prod.id %}?action=inc"><button type="button" class="btn btn-success"> + </button></a>
+                                <a href="{% url 'core:edit_cart' prod.id %}?action=dec"><button type="button" class="btn btn-warning"> - </button></a>
+                                <a href="{% url 'core:edit_cart' prod.id %}?action=del"><button type="button" class="btn btn-danger"> x </button></a>
+                            </td>
+                            
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+                <h4>Total: {{cart.total}}</h4>
+                <a href="{% url 'core:remove_cart' %}"><button type="button" class="btn btn-danger"> Limpar Carrinho </button></a>
+                <a href="{% url 'core:buy' %}"><button type="button" class="btn btn-success"> Realizar Compra </button></a>
+            
+            {% endif %}
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+{% endblock %}

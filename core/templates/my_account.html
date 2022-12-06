@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Minha Conta{% endblock %}
+
+{% block content %}
+
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title text-center">
+                    <h3 class="title">Minha Conta</h3>
+                </div>
+            </div>
+            <!-- /section title -->
+
+                <div class="col-md-4">
+                    <div class="section-title text-center">
+                        <h4 class="title">Meus Dados</h4>
+                    </div>
+
+                    <p><strong>Usuário: </strong>{{ client.user }}</p>
+                    <p><strong>Nome: </strong>{{ client.name }}</p>
+                    <p><strong>E-mail: </strong>{{ client.address }}</p>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="section-title text-center">
+                        <h4 class="title">Minhas Compras</h4>
+                    </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Código</th>
+                            <th scope="col">Destinatário</th>
+                            <th scope="col">Endereço</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Detalhe</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+    
+                        {% for b in buy %}
+                            <tr>
+                                <th scope="row">{{b.id}}</th>
+                                <td>{{b.recipient}}</td>
+                                <td>{{b.address}}</td>
+                                <td>{{b.total}}</td>
+                                <td>{{b.status}}</td>
+                                <td><a href="{% url 'core:detail_buy' b.pk %}">Ver</a></td>
+                            </tr>
+                        {% endfor %}
+    
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+
+{% endblock %}
